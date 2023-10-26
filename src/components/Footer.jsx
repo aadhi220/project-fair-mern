@@ -31,18 +31,32 @@ export default function Footer() {
             Home
           </Link>
           <Link
-            to={"/Cart"}
+            to={"/dashboard"}
             className=""
             style={{ textDecoration: "none", color: "white" }}
           >
-            Cart
+            Dashboard
           </Link>
           <Link
-            to={"/Wishlist"}
+            to={"/login"}
             className=""
             style={{ textDecoration: "none", color: "white" }}
           >
-            Wishlist
+            Login
+          </Link>
+          <Link
+            to={"/projects"}
+            className=""
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            Projects
+          </Link>
+          <Link
+            to={"/register"}
+            className=""
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            Register
           </Link>
         
             
