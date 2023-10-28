@@ -6,14 +6,14 @@ export default function Footer() {
     <>
       <div
         style={{ height: "300px" }}
-        className="d-flex bg-primary flex-column justify-content-center text-white align-items center"
+        className="d-flex bg-success flex-column justify-content-center text-white align-items center"
       >
         <div className="footer-content d-flex justify-content-evenly w-100">
 
 
 
           <div className="website text-start w-25 d-flex flex-column justify-content-start">
-         <Link to={'/'} className="text-white" style={{textDecoration:'none'}}><h2 >Project Fair</h2></Link>
+         <Link to={'/'} className="text-white" style={{textDecoration:'none'}}> <h2 > <i className='fa-brands fa-stack-overflow fa-bounce'></i> Project Fair</h2></Link>
             <p> Designed and built with all the love in the world by Adithyan
              with the help of our contributors.</p>
              <p>Code licensed MIT, docs CC BY 3.0.</p>
