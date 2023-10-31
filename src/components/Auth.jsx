@@ -46,26 +46,36 @@ export default function Auth({ register }) {
                     )}
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Control type="email" placeholder="Enter your Email ID" />
+                      <Form.Control
+                        type="email"
+                        placeholder="Enter your Email ID"
+                      />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Control type="paswword" placeholder="password" />
+                      <Form.Control type="paswword" placeholder="password" />
 
-                    {
-                        isRegisterForm ? 
+                      {isRegisterForm ? (
                         <div className="mt-3">
-                            <button className="btn btn-light mb-2">Register</button>
-                            <p>Already have Account? click here <Link to={'/login'}>Login</Link></p>
-                        </div>  
-                        : 
-                        <div className="mt-3">
-                        <button className="btn btn-light mb-2">Login</button>
-                            <p>Dont have an Account? click here <Link className="text-black" to={'/register'}>Register</Link></p>
+                          <button className="btn btn-light mb-2">
+                            Register
+                          </button>
+                          <p>
+                            Already have Account? click here{" "}
+                            <Link to={"/login"}>Login</Link>
+                          </p>
                         </div>
-                        
-                    }
-                  
-                  </Form.Group>
+                      ) : (
+                        <div className="mt-3">
+                          <button className="btn btn-light mb-2">Login</button>
+                          <p>
+                            Dont have an Account? click here{" "}
+                            <Link className="text-black" to={"/register"}>
+                              Register
+                            </Link>
+                          </p>
+                        </div>
+                      )}
+                    </Form.Group>
                   </Form>
                 </div>
               </div>

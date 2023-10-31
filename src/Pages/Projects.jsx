@@ -9,7 +9,7 @@ function Projects() {
       <div style={{ marginTop: "100px" }} className="container">
         <h1 className="text-center mb-5">Projects</h1>
         <div className="d-flex w-100  justify-content-center align-items-center ">
-          <form  className="d-flex  overflow-hidden mb-5 border border-2 border-primary   rounded">
+          <form className="d-flex  overflow-hidden mb-5 border border-2 border-primary   rounded">
             <input
               type="text"
               style={{ width: "450px" }}

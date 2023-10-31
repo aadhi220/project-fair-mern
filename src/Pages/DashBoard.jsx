@@ -1,9 +1,29 @@
-import React from 'react'
-
+import React from "react";
+import { Row, Col } from "react-bootstrap";
+import Header from "../components/Header";
+import MyProjects from "../components/MyProjects";
+import MyProfile from "../components/MyProfile";
 function DashBoard() {
   return (
-    <div>DashBoard</div>
-  )
+    <div style={{ minHeight: "20vh" }} className="overflow-hidden p-3">
+      <Header />
+      
+      <Row className="" style={{ marginTop: "100px" }}>
+      <h2 className="w-100">
+            Welcome <span style={{ color: "red" }}>User</span>
+          </h2>
+        <Col sm={12} md={8}>
+          {/* My Project section */}
+          
+          <MyProjects />
+        </Col>
+        <Col sm={12} md={4} className="d-flex justify-content-center">
+          {/* My profile Section */}
+          <MyProfile />
+        </Col>
+      </Row>
+    </div>
+  );
 }
 
-export default DashBoard
+export default DashBoard;

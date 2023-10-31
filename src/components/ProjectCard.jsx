@@ -46,14 +46,21 @@ export default function ProjectCard() {
             </Col>
           </Row>
           <div className="mt-3">
-            <a href="https://github.com/aadhi220/mywatchlist" target="_blank" className="btn me-3">
+            <a
+              href="https://github.com/aadhi220/mywatchlist"
+              target="_blank"
+              className="btn me-3"
+            >
               <i className="fa-brands fa-github fa-2xl"></i>
             </a>
 
-            <a href="https://mywatchlist-orcin.vercel.app" target="_blank" className="btn me-3">
+            <a
+              href="https://mywatchlist-orcin.vercel.app"
+              target="_blank"
+              className="btn me-3"
+            >
               <i className="fa-solid fa-link fa-2xl"></i>
             </a>
-
           </div>
         </Modal.Body>
       </Modal>

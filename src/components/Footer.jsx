@@ -6,7 +6,7 @@ export default function Footer() {
     <>
       <div
         style={{ height: "300px" }}
-        className="d-flex bg-success flex-column justify-content-center text-white align-items center"
+        className="d-flex bg-success  flex-column justify-content-center text-white align-items center"
       >
         <div className="footer-content d-flex justify-content-evenly w-100">
 
