@@ -6,19 +6,21 @@ import Projects from "./Pages/Projects";
 import Footer from "./components/Footer";
 import Auth from "./components/Auth";
 import { useState } from "react";
+import { ToastContainer } from "react-bootstrap";
 
 function App() {
-  const [register, setRegister] = useState(false);
+  const [register, setRegister] = useState(true);
   return (
     <>
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path={"/dashboard"} element={<DashBoard />} />
-        <Route path={"/login"} element={<Auth register={register} />} />
+        <Route path={"/login"} element={<Auth  />} />
         <Route path={"/register"} element={<Auth register={register} />} />
         <Route path={"/projects"} element={<Projects />} />
       </Routes>
       <Footer />
+      <ToastContainer/>
     </>
   );
 }

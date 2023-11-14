@@ -1,10 +1,18 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 
 function ContainerOutsideExample() {
+const navigate = useNavigate();
   const location = useLocation();
   console.log(location.pathname);
+
+  const handleLogOut =()=> {
+    sessionStorage.clear()
+    navigate('/')
+    
+  }
   return (
     <Container>
       <Navbar fixed="top" className="bg-success">
@@ -17,7 +25,7 @@ function ContainerOutsideExample() {
             </Navbar.Brand>
           </Link>
           {location.pathname === "/dashboard" && (
-            <button className="btn btn-primary">
+            <button className="btn btn-primary" onClick={handleLogOut}>
               LogOut{" "}
               <i
                 class="fa-solid fa-right-from-bracket  "
