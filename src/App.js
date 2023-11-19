@@ -6,7 +6,8 @@ import Projects from "./Pages/Projects";
 import Footer from "./components/Footer";
 import Auth from "./components/Auth";
 import { useState } from "react";
-import { ToastContainer } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [register, setRegister] = useState(true);
@@ -20,7 +21,19 @@ function App() {
         <Route path={"/projects"} element={<Projects />} />
       </Routes>
       <Footer />
-      <ToastContainer/>
+      <ToastContainer
+position="top-right"
+autoClose={1000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
+
     </>
   );
 }

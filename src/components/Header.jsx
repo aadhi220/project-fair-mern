@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 function ContainerOutsideExample() {
 const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.pathname);
+  // console.log(location.pathname);
 
   const handleLogOut =()=> {
     sessionStorage.clear()
@@ -28,7 +28,7 @@ const navigate = useNavigate();
             <button className="btn btn-primary" onClick={handleLogOut}>
               LogOut{" "}
               <i
-                class="fa-solid fa-right-from-bracket  "
+                className="fa-solid fa-right-from-bracket  "
                 style={{ color: "" }}
               ></i>
             </button>
