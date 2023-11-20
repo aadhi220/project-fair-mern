@@ -17,5 +17,5 @@ export const loginAPI =async (user)=> {
 //add Project 
 
 export const AddProjectApi =async(reqBody,reqHeader)=>{
-    return await commonApi("POST",`${BASE_URL}/project/add`,reqBody,reqHeader)
+    return await commonApi("POST",`${BASE_URL}/projects/add`,reqBody,reqHeader)
 }
