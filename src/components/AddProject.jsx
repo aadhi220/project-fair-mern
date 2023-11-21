@@ -47,7 +47,7 @@ function AddProject() {
       reqBody.append("website", website);
       reqBody.append("thumbnail", thumbnail);
   
-      console.log("Request Body Entries:", Array.from(reqBody.entries()));
+      // console.log("Request Body Entries:", Array.from(reqBody.entries()));
   
       if (token) {
         const reqHeader = {

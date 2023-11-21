@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 // import titleImg from '../Assets/web-development-3454628-2918517.webp'
 import titleImg2 from '../Assets/web-developer-illustration-1024x745-u15ekn1r.png'
 import ProjectCard from '../components/ProjectCard'
+import { homeProjectAPI } from '../services/allAPI'
 function Home() {
   const [isUserLogin,setIsUserLogin]=useState(false)
   useEffect(()=> {
@@ -12,6 +13,24 @@ setIsUserLogin(true)
     }else {
       setIsUserLogin(false)
     }
+  },[])
+
+
+const[homeProjects,setHomeProjects]=useState([])
+//api call
+const getHomeProjects =async ()=> {
+  const result = await homeProjectAPI()
+  if(result.status===200) {
+    setHomeProjects(result.data)
+  }else {
+    console.log(result);
+    console.log(Response.data);
+  }
+}
+// console.log(homeProjects);
+useEffect(()=> {
+    getHomeProjects()
+    
   },[])
   return (
     <>
@@ -40,24 +59,20 @@ setIsUserLogin(true)
 <h1 className="text-center">Explore Our Projects</h1>
 <marquee scrollAmount={25} >
   <div className='d-flex gap-5 mt-5'> 
-    <div style={{width:'500px'}} className=''> 
+
+
+    { homeProjects?.length>0 ? homeProjects.map((project,index)=>{
+
+   return ( <div key={index} style={{width:'500px'}} className=''> 
   
-      <ProjectCard/>
+      <ProjectCard projectDetails={project}/>
   
     
-    </div>
-    <div style={{width:'500px'}} className=''> 
+    </div>)
+  }) : "empty "
   
-  <ProjectCard/>
+  }
 
-
-</div>
-<div style={{width:'500px'}} className=''> 
-  
-  <ProjectCard/>
-
-
-</div>
 
   
   </div>
