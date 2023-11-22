@@ -1,7 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import AddProject from "./AddProject";
+import { getUserProjectAPI } from "../services/allAPI";
+import { useGlobalContext } from "../contextApi/ContextShare";
+
 export default function MyProjects() {
+const {addProjectResponse}=useGlobalContext()
+  const [userProjects,setUserProjects]=useState([])
+
+  const getUserProjects=async ()=>{
+if(sessionStorage.getItem("token")){
+  const token= sessionStorage.getItem("token");
+  const reqHeader = {
+    "Content-Type":"application/json", "Authorization":`Bearer ${token}`
+  }
+  const result =await getUserProjectAPI(reqHeader);
+  if(result.status===200){
+    setUserProjects(result.data)
+
+  }else {
+    console.log(("error",result));
+  }
+}
+  }
+
+  useEffect(()=> {
+    getUserProjects()
+  },[addProjectResponse])
   return (
     <>
       <div className="container-fluid shadow rounded p-3 mt-3">
@@ -13,21 +38,26 @@ export default function MyProjects() {
           </div>
         </div>
 
-        <div className="mt-4">
-          <div className="border d-flex align-items-center rounded p-2">
-            <h5>Project Title</h5>
-            <div className="icon ms-auto">
-              <button className="btn">
-                <i className="fa-solid fa-pen-to-square fa-2xl"></i>
-              </button>{" "}
-              <button className="btn">
-                <i className="fa-brands fa-github fa-2xl"></i>
-              </button>{" "}
-              <button className="btn">
-                <i className="fa-solid fa-trash fa-2xl"></i>
-              </button>{" "}
-            </div>
-          </div>
+        <div className="mt-4 d-flex flex-column gap-3">
+      {userProjects.length>0? userProjects.map((project,index)=>(
+        <div key={index} className="border d-flex align-items-center rounded p-2">
+        <h5>{project?.title}</h5>
+        <div className="icon ms-auto">
+          <button className="btn">
+            <i className="fa-solid fa-pen-to-square fa-2xl"></i>
+          </button>{" "}
+          <a href={project?.github} target="_blank">
+            <button  className="btn">
+              <i className="fa-brands fa-github fa-2xl"></i>
+            </button>
+          </a>{" "}
+          <button className="btn">
+            <i className="fa-solid fa-trash fa-2xl"></i>
+          </button>{" "}
+        </div>
+      </div>
+      )) :"empty"  
+          }
         </div>
       </div>
     </>

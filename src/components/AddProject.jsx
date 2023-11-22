@@ -4,8 +4,12 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { AddProjectApi } from "../services/allAPI";
+import { useGlobalContext } from "../contextApi/ContextShare";
+
+
 
 function AddProject() {
+  const {setAddProjectResponse,addProjectResponse}=useGlobalContext()
   const [show, setShow] = useState(false);
   const [token, setToken] = useState("");
   const handleClose = () => {
@@ -58,6 +62,7 @@ function AddProject() {
         try {
           const result = await AddProjectApi(reqBody,reqHeader);
           if (result.status === 200) {
+            setAddProjectResponse(!addProjectResponse)
             handleClose();
           } else {
             console.log("API Error Response:", result);
