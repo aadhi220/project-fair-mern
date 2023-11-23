@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
 import AddProject from "./AddProject";
 import { getUserProjectAPI } from "../services/allAPI";
-import { useGlobalContext } from "../contextApi/ContextShare";
-
+import { addProjectResponseContext } from "../contextApi/ContextShare";
+import EditProject from "./EditProject";
 export default function MyProjects() {
-const {addProjectResponse}=useGlobalContext()
+const {addProjectResponse}=useContext(addProjectResponseContext)
   const [userProjects,setUserProjects]=useState([])
 
   const getUserProjects=async ()=>{
@@ -43,9 +42,7 @@ if(sessionStorage.getItem("token")){
         <div key={index} className="border d-flex align-items-center rounded p-2">
         <h5>{project?.title}</h5>
         <div className="icon ms-auto">
-          <button className="btn">
-            <i className="fa-solid fa-pen-to-square fa-2xl"></i>
-          </button>{" "}
+         <EditProject project={project}/>
           <a href={project?.github} target="_blank">
             <button  className="btn">
               <i className="fa-brands fa-github fa-2xl"></i>

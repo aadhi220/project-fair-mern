@@ -4,40 +4,41 @@ import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { AddProjectApi } from "../services/allAPI";
 import { addProjectResponseContext } from "../contextApi/ContextShare";
+import { BASE_URL } from "../services/baseUrl";
 
-function AddProject() {
+function EditProject({project}) {
   const {setAddProjectResponse,addProjectResponse}=useContext(addProjectResponseContext)
   const [show, setShow] = useState(false);
   const [token, setToken] = useState("");
   const handleClose = () => {
     setShow(false);
     setProjectDetails({
-      title: "",
-      languages: "",
-      overview: "",
-      github: "",
-      website: "",
-      thumbnail: "",
+        title: "",
+        languages: "",
+        overview: "",
+        github: "",
+        website: "",
+        thumbnail: "",
     });
     setPreview("");
   };
   const handleShow = () => setShow(true);
   const [projectDetails, setProjectDetails] = useState({
-    title: "",
-    languages: "",
-    overview: "",
-    github: "",
-    website: "",
-    thumbnail: "",
+    title: project.title,
+    languages: project.languages,
+    overview: project.overview,
+    github: project.github,
+    website: project.website,
+    thumbnail:"",
   });
   const [preview, setPreview] = useState("");
 
-  const handleAddProject = async (e) => {
+  const handleEditProject = async (e) => {
     e.preventDefault();
   
     const { title, languages, overview, github, website, thumbnail } = projectDetails;
   
-    if (!title || !languages || !overview || !github || !website || !thumbnail) {
+    if (!title || !languages || !overview || !github || !website ) {
       toast.warning("Please fill in all fields.");
     } else {
       const reqBody = new FormData();
@@ -73,14 +74,12 @@ function AddProject() {
       }
     }
   };
-  console.log("photo",projectDetails.thumbnail);
-  console.log("url",preview);
   
   useEffect(() => {
     if (projectDetails.thumbnail) {
       setPreview(URL.createObjectURL(projectDetails.thumbnail));
     }
-  }, [projectDetails.thumbnail]);
+  }, [projectDetails.thumbnail,project]);
 
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
@@ -91,13 +90,13 @@ function AddProject() {
   }, []);
   return (
     <>
-      <Button variant="outline-info" onClick={handleShow}>
-        Add Project
-      </Button>
+      <button className="bg-transparent border-0" onClick={handleShow}>
+      <i className="fa-solid fa-pen-to-square fa-2xl"></i>
+      </button>
 
       <Modal show={show} centered size="lg" onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Project Details</Modal.Title>
+          <Modal.Title>Edit Project</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row">
@@ -108,7 +107,7 @@ function AddProject() {
                   src={
                     preview
                       ? preview
-                      : "https://lirp.cdn-website.com/343f0986cb9d4bc5bc00d8a4a79b4156/dms3rep/multi/opt/1274512-placeholder-640w.png"
+                      :`${BASE_URL}/uploads/${project.thumbnail}` 
                   }
                   alt=""
                 />
@@ -193,7 +192,7 @@ function AddProject() {
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={(e) => handleAddProject(e)}>
+          <Button variant="primary" onClick={(e) => handleEditProject(e)}>
             Add Project
           </Button>
         </Modal.Footer>
@@ -202,4 +201,4 @@ function AddProject() {
   );
 }
 
-export default AddProject;
+export default EditProject;

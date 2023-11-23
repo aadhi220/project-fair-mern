@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Row,Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-// import titleImg from '../Assets/web-development-3454628-2918517.webp'
 import titleImg2 from '../Assets/web-developer-illustration-1024x745-u15ekn1r.png'
 import ProjectCard from '../components/ProjectCard'
 import { homeProjectAPI } from '../services/allAPI'

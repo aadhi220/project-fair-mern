@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext,useState } from "react";
 export const addProjectResponseContext = createContext();
 
 function ContextShare({ children }) {
@@ -12,7 +12,7 @@ function ContextShare({ children }) {
     </addProjectResponseContext.Provider>
   </> )
 }
-export const useGlobalContext=()=>{
-return (useContext(addProjectResponseContext))
-}
+// export const useGlobalContext=()=>{
+// return (useContext(addProjectResponseContext))
+// }
 export default ContextShare;
