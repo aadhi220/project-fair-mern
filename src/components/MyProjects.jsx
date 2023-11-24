@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import AddProject from "./AddProject";
 import { getUserProjectAPI } from "../services/allAPI";
-import { addProjectResponseContext } from "../contextApi/ContextShare";
+import { addProjectResponseContext, editProjectResponseContext } from "../contextApi/ContextShare";
 import EditProject from "./EditProject";
+import LoadingSpinner from "./Spinner";
 export default function MyProjects() {
 const {addProjectResponse}=useContext(addProjectResponseContext)
+const {editProjectResponse}=useContext(editProjectResponseContext)
   const [userProjects,setUserProjects]=useState([])
 
   const getUserProjects=async ()=>{
@@ -25,7 +27,7 @@ if(sessionStorage.getItem("token")){
 
   useEffect(()=> {
     getUserProjects()
-  },[addProjectResponse])
+  },[addProjectResponse,editProjectResponse])
   return (
     <>
       <div className="container-fluid shadow rounded p-3 mt-3">
@@ -53,7 +55,7 @@ if(sessionStorage.getItem("token")){
           </button>{" "}
         </div>
       </div>
-      )) :"empty"  
+      )) :<LoadingSpinner/>  
           }
         </div>
       </div>

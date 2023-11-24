@@ -2,28 +2,31 @@ import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { AddProjectApi } from "../services/allAPI";
-import { addProjectResponseContext } from "../contextApi/ContextShare";
+import {editProjectResponseContext } from "../contextApi/ContextShare";
 import { BASE_URL } from "../services/baseUrl";
+import { EditUserProjectAPI } from "../services/allAPI";
 
 function EditProject({project}) {
-  const {setAddProjectResponse,addProjectResponse}=useContext(addProjectResponseContext)
+  const {editProjectResponse,setEditProjectResponse}=useContext(editProjectResponseContext)
   const [show, setShow] = useState(false);
-  const [token, setToken] = useState("");
+
+  
+  const handleShow = () => setShow(true);
   const handleClose = () => {
     setShow(false);
     setProjectDetails({
-        title: "",
-        languages: "",
-        overview: "",
-        github: "",
-        website: "",
-        thumbnail: "",
+      id:project._id,
+      title: project.title,
+      languages: project.languages,
+      overview: project.overview,
+      github: project.github,
+      website: project.website,
+      thumbnail:"",
     });
     setPreview("");
   };
-  const handleShow = () => setShow(true);
   const [projectDetails, setProjectDetails] = useState({
+    id:project._id,
     title: project.title,
     languages: project.languages,
     overview: project.overview,
@@ -35,8 +38,8 @@ function EditProject({project}) {
 
   const handleEditProject = async (e) => {
     e.preventDefault();
-  
-    const { title, languages, overview, github, website, thumbnail } = projectDetails;
+  console.log("edit strat");
+    const {id, title, languages, overview, github, website, thumbnail } = projectDetails;
   
     if (!title || !languages || !overview || !github || !website ) {
       toast.warning("Please fill in all fields.");
@@ -47,31 +50,41 @@ function EditProject({project}) {
       reqBody.append("overview", overview);
       reqBody.append("github", github);
       reqBody.append("website", website);
-      reqBody.append("thumbnail", thumbnail);
+     preview ?  reqBody.append("thumbnail", thumbnail): reqBody.append("thumbnail", project.thumbnail);
   
       // console.log("Request Body Entries:", Array.from(reqBody.entries()));
   
-      if (token) {
-        const reqHeader = {
-          "Content-Type": "multipart/form-data",
-          "Authorization": `Bearer ${token}`,
-        };
+  const token =sessionStorage.getItem("token")
+    if(preview){
+      const reqHeader = {
+        "Content-Type": "multipart/form-data",
+        "Authorization": `Bearer ${token}`,
+      };
+     
+    //api call 
+const result =await EditUserProjectAPI(id,reqHeader,reqBody)
+console.log("call start");
+if( result.status===200) {
+  handleClose()
   
-        try {
-          const result = await AddProjectApi(reqBody,reqHeader);
-          if (result.status === 200) {
-            setAddProjectResponse(!addProjectResponse)
-            handleClose();
-          } else {
-            console.log("API Error Response:", result);
-            console.log("API Error Data:", result.response.data);
-            toast.error("Error adding project. Please try again.");
-          }
-        } catch (error) {
-          console.error("API Request Error:", error);
-          toast.error("Error adding project. Please try again.");
-        }
-      }
+  //pass response to my project
+  setEditProjectResponse(!editProjectResponse)
+}
+    }else {
+      const reqHeader = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      };
+      const result =await EditUserProjectAPI(id,reqHeader,reqBody)
+      console.log("call start");
+      console.log(result);
+      
+    }
+
+
+  
+      
+     
     }
   };
   
@@ -79,15 +92,8 @@ function EditProject({project}) {
     if (projectDetails.thumbnail) {
       setPreview(URL.createObjectURL(projectDetails.thumbnail));
     }
-  }, [projectDetails.thumbnail,project]);
+  }, [projectDetails.thumbnail]);
 
-  useEffect(() => {
-    if (sessionStorage.getItem("token")) {
-      setToken(sessionStorage.getItem("token"));
-    } else {
-      setToken("");
-    }
-  }, []);
   return (
     <>
       <button className="bg-transparent border-0" onClick={handleShow}>
