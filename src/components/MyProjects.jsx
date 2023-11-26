@@ -24,7 +24,17 @@ if(sessionStorage.getItem("token")){
   }
 }
   }
+const handleDeleteProject=async (projectId)=>{
+const token= sessionStorage.getItem("token");
+  const reqHeader = {
+    "Content-Type":"application/json", "Authorization":`Bearer ${token}`
+  }
+  const result =await getUserProjectAPI(projectId,reqHeader);
+  if(result.status===200){
+    getUserProjects() 
+  }
 
+}
   useEffect(()=> {
     getUserProjects()
   },[addProjectResponse,editProjectResponse])
@@ -50,7 +60,7 @@ if(sessionStorage.getItem("token")){
               <i className="fa-brands fa-github fa-2xl"></i>
             </button>
           </a>{" "}
-          <button className="btn">
+          <button className="btn" onClick={(e)=>handleDeleteProject(project?._id)}>
             <i className="fa-solid fa-trash fa-2xl"></i>
           </button>{" "}
         </div>

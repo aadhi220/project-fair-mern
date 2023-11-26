@@ -73,8 +73,8 @@ function AddProject() {
       }
     }
   };
-  console.log("photo",projectDetails.thumbnail);
-  console.log("url",preview);
+  // console.log("photo",projectDetails.thumbnail);
+  // console.log("url",preview);
   
   useEffect(() => {
     if (projectDetails.thumbnail) {

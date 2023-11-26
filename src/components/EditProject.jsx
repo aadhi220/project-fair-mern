@@ -2,46 +2,48 @@ import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import {editProjectResponseContext } from "../contextApi/ContextShare";
+import { editProjectResponseContext } from "../contextApi/ContextShare";
 import { BASE_URL } from "../services/baseUrl";
 import { EditUserProjectAPI } from "../services/allAPI";
 
-function EditProject({project}) {
-  const {editProjectResponse,setEditProjectResponse}=useContext(editProjectResponseContext)
+function EditProject({ project }) {
+  const { editProjectResponse, setEditProjectResponse } = useContext(
+    editProjectResponseContext
+  );
   const [show, setShow] = useState(false);
 
-  
   const handleShow = () => setShow(true);
   const handleClose = () => {
     setShow(false);
     setProjectDetails({
-      id:project._id,
+      id: project._id,
       title: project.title,
       languages: project.languages,
       overview: project.overview,
       github: project.github,
       website: project.website,
-      thumbnail:"",
+      thumbnail: "",
     });
     setPreview("");
   };
   const [projectDetails, setProjectDetails] = useState({
-    id:project._id,
+    id: project._id,
     title: project.title,
     languages: project.languages,
     overview: project.overview,
     github: project.github,
     website: project.website,
-    thumbnail:"",
+    thumbnail: "",
   });
   const [preview, setPreview] = useState("");
 
   const handleEditProject = async (e) => {
     e.preventDefault();
-  console.log("edit strat");
-    const {id, title, languages, overview, github, website, thumbnail } = projectDetails;
-  
-    if (!title || !languages || !overview || !github || !website ) {
+    console.log("function handleEditProject");
+    const { id, title, languages, overview, github, website, thumbnail } =
+      projectDetails;
+console.log("id",id);
+    if (!title || !languages || !overview || !github || !website) {
       toast.warning("Please fill in all fields.");
     } else {
       const reqBody = new FormData();
@@ -50,54 +52,83 @@ function EditProject({project}) {
       reqBody.append("overview", overview);
       reqBody.append("github", github);
       reqBody.append("website", website);
-     preview ?  reqBody.append("thumbnail", thumbnail): reqBody.append("thumbnail", project.thumbnail);
-  
+      preview
+        ? reqBody.append("thumbnail", thumbnail)
+        : reqBody.append("thumbnail", project.thumbnail);
+        console.log("project.thumbnail",project.thumbnail);
+
       // console.log("Request Body Entries:", Array.from(reqBody.entries()));
-  
-  const token =sessionStorage.getItem("token")
-    if(preview){
-      const reqHeader = {
-        "Content-Type": "multipart/form-data",
-        "Authorization": `Bearer ${token}`,
-      };
-     
-    //api call 
-const result =await EditUserProjectAPI(id,reqHeader,reqBody)
-console.log("call start");
-if( result.status===200) {
-  handleClose()
-  
-  //pass response to my project
-  setEditProjectResponse(!editProjectResponse)
-}
-    }else {
-      const reqHeader = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      };
-      const result =await EditUserProjectAPI(id,reqHeader,reqBody)
-      console.log("call start");
-      console.log(result);
-      
-    }
 
+      const token = sessionStorage.getItem("token");
+      if (preview) {
+        const reqHeader = {
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${token}`,
+        };
+        console.log("Request Header:", reqHeader);
+        //api call
+      try{  const result = await EditUserProjectAPI(id, reqHeader, reqBody);
+        console.log("call start");
+        if (result.status === 200) {
+          handleClose();
 
-  
-      
-     
+          //pass response to my project
+          setEditProjectResponse(!editProjectResponse);
+        }else{
+          console.log("API Error Response:", result);
+          // console.log("API Error Data:", result.response.data);
+          toast.error("Error editing project. Please try again.");
+        }}catch(err){ console.log("err",err)}
+      } else {
+        const reqHeader = {
+          "Content-Type": "application/json",
+         "Authorization": `Bearer ${token}`,
+        };
+        console.log("Request Header:", reqHeader);
+        try {
+          const result = await EditUserProjectAPI(id, reqHeader, reqBody);
+          console.log("api call 2nd start");
+
+          if (result.status === 200) {
+            handleClose();
+
+            //pass response to my project
+            setEditProjectResponse(!editProjectResponse);
+          } else {
+
+            console.log(`API Error ${result.status} Response:`, result );
+            // console.log("API Error Data:", result.response.data);
+            toast.error("Error editing project. Please try again.");
+          }
+        } catch (err) {
+          console.log("err", err);
+        }
+      }
     }
   };
-  
+
   useEffect(() => {
     if (projectDetails.thumbnail) {
       setPreview(URL.createObjectURL(projectDetails.thumbnail));
     }
   }, [projectDetails.thumbnail]);
 
+  useEffect(()=>{
+    setProjectDetails({
+      id: project._id,
+      title: project.title,
+      languages: project.languages,
+      overview: project.overview,
+      github: project.github,
+      website: project.website,
+      thumbnail: "",
+    }); 
+    console.log("called");
+  },[editProjectResponse])
   return (
     <>
       <button className="bg-transparent border-0" onClick={handleShow}>
-      <i className="fa-solid fa-pen-to-square fa-2xl"></i>
+        <i className="fa-solid fa-pen-to-square fa-2xl"></i>
       </button>
 
       <Modal show={show} centered size="lg" onHide={handleClose}>
@@ -113,7 +144,7 @@ if( result.status===200) {
                   src={
                     preview
                       ? preview
-                      :`${BASE_URL}/uploads/${project.thumbnail}` 
+                      : `${BASE_URL}/uploads/${project.thumbnail}`
                   }
                   alt=""
                 />
@@ -199,7 +230,7 @@ if( result.status===200) {
             Cancel
           </Button>
           <Button variant="primary" onClick={(e) => handleEditProject(e)}>
-            Add Project
+            Edit Project
           </Button>
         </Modal.Footer>
       </Modal>
