@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import AddProject from "./AddProject";
-import { getUserProjectAPI } from "../services/allAPI";
+import { DeleteUserProjectAPI, getUserProjectAPI } from "../services/allAPI";
 import { addProjectResponseContext, editProjectResponseContext } from "../contextApi/ContextShare";
 import EditProject from "./EditProject";
 import LoadingSpinner from "./Spinner";
 export default function MyProjects() {
 const {addProjectResponse}=useContext(addProjectResponseContext)
-const {editProjectResponse}=useContext(editProjectResponseContext)
+
   const [userProjects,setUserProjects]=useState([])
 
   const getUserProjects=async ()=>{
@@ -26,18 +26,24 @@ if(sessionStorage.getItem("token")){
   }
 const handleDeleteProject=async (projectId)=>{
 const token= sessionStorage.getItem("token");
-  const reqHeader = {
-    "Content-Type":"application/json", "Authorization":`Bearer ${token}`
-  }
-  const result =await getUserProjectAPI(projectId,reqHeader);
+
+const reqHeader = {
+  "Content-Type":"application/json", "Authorization":`Bearer ${token}`
+}
+ try{ const result =await DeleteUserProjectAPI(projectId,reqHeader);
+  console.log(" call",result);
   if(result.status===200){
     getUserProjects() 
-  }
+    console.log("success",result);
+  }else {
+    getUserProjects() 
+    console.log(("error",result));
+  }}catch(e){ console.log(e)}
 
 }
   useEffect(()=> {
     getUserProjects()
-  },[addProjectResponse,editProjectResponse])
+  },[addProjectResponse])
   return (
     <>
       <div className="container-fluid shadow rounded p-3 mt-3">
@@ -60,7 +66,7 @@ const token= sessionStorage.getItem("token");
               <i className="fa-brands fa-github fa-2xl"></i>
             </button>
           </a>{" "}
-          <button className="btn" onClick={(e)=>handleDeleteProject(project?._id)}>
+          <button className="btn" onClick={()=>handleDeleteProject(project?._id)}>
             <i className="fa-solid fa-trash fa-2xl"></i>
           </button>{" "}
         </div>

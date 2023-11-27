@@ -39,10 +39,10 @@ function EditProject({ project }) {
 
   const handleEditProject = async (e) => {
     e.preventDefault();
-    console.log("function handleEditProject");
+    // console.log("function handleEditProject");
     const { id, title, languages, overview, github, website, thumbnail } =
       projectDetails;
-console.log("id",id);
+// console.log("id",id);
     if (!title || !languages || !overview || !github || !website) {
       toast.warning("Please fill in all fields.");
     } else {
@@ -55,7 +55,7 @@ console.log("id",id);
       preview
         ? reqBody.append("thumbnail", thumbnail)
         : reqBody.append("thumbnail", project.thumbnail);
-        console.log("project.thumbnail",project.thumbnail);
+        // console.log("project.thumbnail",project.thumbnail);
 
       // console.log("Request Body Entries:", Array.from(reqBody.entries()));
 
@@ -65,10 +65,10 @@ console.log("id",id);
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${token}`,
         };
-        console.log("Request Header:", reqHeader);
+        // console.log("Request Header:", reqHeader);
         //api call
       try{  const result = await EditUserProjectAPI(id, reqHeader, reqBody);
-        console.log("call start");
+        // console.log("call start");
         if (result.status === 200) {
           handleClose();
 
@@ -84,10 +84,10 @@ console.log("id",id);
           "Content-Type": "application/json",
          "Authorization": `Bearer ${token}`,
         };
-        console.log("Request Header:", reqHeader);
+        // console.log("Request Header:", reqHeader);
         try {
           const result = await EditUserProjectAPI(id, reqHeader, reqBody);
-          console.log("api call 2nd start");
+          // console.log("api call 2nd start");
 
           if (result.status === 200) {
             handleClose();
@@ -123,7 +123,7 @@ console.log("id",id);
       website: project.website,
       thumbnail: "",
     }); 
-    console.log("called");
+    // console.log("called");
   },[editProjectResponse])
   return (
     <>

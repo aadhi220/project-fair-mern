@@ -1,15 +1,20 @@
+// import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+// import { tokenAuthorisationContext } from "../contextApi/TokenAuth";
 
 
 function ContainerOutsideExample() {
+  // const {setIsAuthorised}=useContext(tokenAuthorisationContext)
 const navigate = useNavigate();
   const location = useLocation();
   // console.log(location.pathname);
 
   const handleLogOut =()=> {
+
     sessionStorage.clear()
+    // setIsAuthorised(false);
     navigate('/')
     
   }

@@ -5,20 +5,30 @@ import DashBoard from "./Pages/DashBoard";
 import Projects from "./Pages/Projects";
 import Footer from "./components/Footer";
 import Auth from "./components/Auth";
-import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+// import { useContext } from "react";
+// import { tokenAuthorisationContext } from "./contextApi/TokenAuth";
 
 function App() {
-  const [register, setRegister] = useState(true);
+  // const {isAuthorised}=useContext(tokenAuthorisationContext)
+  const register = true;
+  // console.log(isAuthorised);
+  const token=sessionStorage.getItem('token');
+  console.log(token);
   return (
     <>
       <Routes>
         <Route path={"/"} element={<Home />} />
-        <Route path={"/dashboard"} element={<DashBoard />} />
+        <Route path={"/dashboard"} element={
+        token?
+        <DashBoard /> :
+        <Home/> }
+        
+        />
         <Route path={"/login"} element={<Auth  />} />
-        <Route path={"/register"} element={<Auth register={register} />} />
-        <Route path={"/projects"} element={<Projects />} />
+        <Route path={"/register"} element={<Auth register={ register} />} />
+        <Route path={"/projects"} element={token? <Projects /> : <Home/>} />
       </Routes>
       <Footer />
       <ToastContainer
