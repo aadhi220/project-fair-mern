@@ -7,14 +7,12 @@ import { BrowserRouter } from 'react-router-dom';
 import ContextShare from './contextApi/ContextShare';
 import TokenAuth from './contextApi/TokenAuth';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-   <BrowserRouter>
+  <BrowserRouter>
    <ContextShare>
    <TokenAuth> <App/></TokenAuth>
    </ContextShare>
     </BrowserRouter>
-  </React.StrictMode>
-);
-
+  </React.StrictMode>,
+)

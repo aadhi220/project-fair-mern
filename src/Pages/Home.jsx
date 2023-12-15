@@ -37,7 +37,7 @@ useEffect(()=> {
 <Row className="align-items-center  p-5">
 
   <Col sm={12} md={6}>
-  <h1 style={{fontSize:'80px'}} className='fw-bolder ' ><i className='fa-brands fa-stack-overflow fa-bounce'></i>Project Fair </h1>
+  <h1 style={{fontSize:'80px'}} className='fw-bolder ' ><i className='fa-brands fa-stack-overflow fa-bounce'></i>Project ShowCase </h1>
   <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel, autem, eum velit veniam quia illum quaerat voluptates temporibus tempore at nemo asperiores quod tempora ab alias dignissimos totam cupiditate ipsam.</p>
   
   {isUserLogin ? <Link to={'/dashboard'} className='btn btn-warning'>Manage your Projects<i className='fa-solid fa-right-long fa-beat ms-2'></i></Link>:<Link to={'/login'} className='btn btn-warning'>Start to Explore<i className='fa-solid fa-right-long fa-beat ms-2'></i></Link>}
