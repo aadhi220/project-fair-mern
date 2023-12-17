@@ -25,19 +25,23 @@ const navigate = useNavigate();
           <Link to={"/"} style={{ textDecoration: "none" }}>
             {" "}
             <Navbar.Brand style={{ fontSize: "1.5rem" }} className="text-white">
-              <i className="fa-brands fa-stack-overflow fa-bounce"></i> Project
-              Fair
+            PROJECT SHOWCASE
             </Navbar.Brand>
           </Link>
-          {location.pathname === "/dashboard" && (
-            <button className="btn btn-primary" onClick={handleLogOut}>
-              LogOut{" "}
-              <i
-                className="fa-solid fa-right-from-bracket  "
-                style={{ color: "" }}
-              ></i>
-            </button>
-          )}
+         <div>
+          
+            {location.pathname === "/dashboard" ? (
+               <Link to={'/projects'} className="btn btn-info me-5">All Projects</Link>
+            ):   <Link to={'/dashboard'} className="btn btn-info me-5">Dashboard</Link> }
+
+<button className="btn btn-primary" onClick={handleLogOut}>
+                LogOut{" "}
+                <i
+                  className="fa-solid fa-right-from-bracket  "
+                  style={{ color: "" }}
+                ></i>
+              </button>
+         </div>
         </Container>
       </Navbar>
     </Container>

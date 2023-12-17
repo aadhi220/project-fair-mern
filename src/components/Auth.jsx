@@ -127,7 +127,7 @@ export default function Auth({ register }) {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                       <Form.Control
-                        type="paswword"
+                        type="password"
                         onChange={(e) =>
                           setUserData({ ...userData, password: e.target.value })
                         }

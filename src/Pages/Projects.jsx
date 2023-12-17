@@ -56,7 +56,7 @@ useEffect(()=>{
           {isLoading ? <LoadingSpinner/> : allProjects.length > 0
             ? allProjects?.map((project, index) => (
                 <Col key={index} sm={12} md={6} lg={4}>
-                  <ProjectCard projectDetails={project} />
+                  <ProjectCard projectDetails={project} setSearchKey={setSearchKey} />
                 </Col>
               ))
             : "empty"}

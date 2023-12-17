@@ -13,7 +13,7 @@ setUsername(JSON.parse(sessionStorage.getItem("existingUser")).username)
     }
   }, []);
   return (
-    <div style={{ minHeight: "20vh" }} className="overflow-hidden p-3">
+    <div style={{ minHeight: "70vh"  }} className="overflow-hidden p-3">
       <Header />
       
       <Row className="" style={{ marginTop: "100px" }}>

@@ -10,8 +10,9 @@ function EditProject({ project }) {
   const { editProjectResponse, setEditProjectResponse } = useContext(
     editProjectResponseContext
   );
-  const [show, setShow] = useState(false);
 
+  const [show, setShow] = useState(false);
+  const userDetails=JSON.parse(sessionStorage.getItem("existingUser"));
   const handleShow = () => setShow(true);
   const handleClose = () => {
     setShow(false);
@@ -52,6 +53,10 @@ function EditProject({ project }) {
       reqBody.append("overview", overview);
       reqBody.append("github", github);
       reqBody.append("website", website);
+      reqBody.append("username",userDetails.username);
+      reqBody.append("profilePic",userDetails.profile);
+      reqBody.append("userGit",userDetails.github);
+      reqBody.append("userLinkdin",userDetails.linkdin);
       preview
         ? reqBody.append("thumbnail", thumbnail)
         : reqBody.append("thumbnail", project.thumbnail);
@@ -91,7 +96,7 @@ function EditProject({ project }) {
 
           if (result.status === 200) {
             handleClose();
-
+            toast.success("Project Details updated");
             //pass response to my project
             setEditProjectResponse(!editProjectResponse);
           } else {

@@ -9,6 +9,7 @@ function AddProject() {
   const {setAddProjectResponse,addProjectResponse}=useContext(addProjectResponseContext)
   const [show, setShow] = useState(false);
   const [token, setToken] = useState("");
+  const userDetails=JSON.parse(sessionStorage.getItem("existingUser"));
   const handleClose = () => {
     setShow(false);
     setProjectDetails({
@@ -18,6 +19,7 @@ function AddProject() {
       github: "",
       website: "",
       thumbnail: "",
+    
     });
     setPreview("");
   };
@@ -29,6 +31,7 @@ function AddProject() {
     github: "",
     website: "",
     thumbnail: "",
+
   });
   const [preview, setPreview] = useState("");
 
@@ -47,6 +50,11 @@ function AddProject() {
       reqBody.append("github", github);
       reqBody.append("website", website);
       reqBody.append("thumbnail", thumbnail);
+      reqBody.append("username",userDetails.username);
+      reqBody.append("profilePic",userDetails.profile);
+      reqBody.append("userGit",userDetails.github);
+      reqBody.append("userLinkdin",userDetails.linkdin);
+      
   
       // console.log("Request Body Entries:", Array.from(reqBody.entries()));
   
@@ -60,6 +68,7 @@ function AddProject() {
           const result = await AddProjectApi(reqBody,reqHeader);
           if (result.status === 200) {
             setAddProjectResponse(!addProjectResponse)
+            toast.success("Project Added Successfully");
             handleClose();
           } else {
             console.log("API Error Response:", result);
